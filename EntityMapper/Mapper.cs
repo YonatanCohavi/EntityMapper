@@ -1,6 +1,5 @@
 ﻿using EntityMapper.Attributes;
 using EntityMapper.Helpes;
-using EntityMapper.Interfaces;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;

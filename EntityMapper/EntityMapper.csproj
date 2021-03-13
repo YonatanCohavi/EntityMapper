@@ -61,7 +61,7 @@
     <Compile Include="Attributes\CRMEnumAttribute.cs" />
     <Compile Include="Attributes\CRMLookupAttribute.cs" />
     <Compile Include="Helpes\PropertyHelper.cs" />
-    <Compile Include="Interfaces\CrmEntityBase.cs" />
+    <Compile Include="CrmEntityBase.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

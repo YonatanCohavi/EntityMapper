@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
+    <id>EntityMapper.Dynamics.CRM</id>
+    <version>1.0.1</version>
     <title>$title$</title>
     <authors>Yonatan Cohavi</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>http://www.google.com/</projectUrl>
-    <icon>images\adventureMap.png</icon>
-    <description>Entity Mapper</description>
+    <projectUrl>https://github.com/YonatanCohavi/EntityMapper</projectUrl>
+    <icon>images\icon.png</icon>
+    <description>Creating Entity Models</description>
     <releaseNotes>Initial Release</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags>Microsoft Dynamics CRM Tool Mapper Attribute</tags>
-   <dependencies>
-      <group targetFramework=".NETFramework4.6.2" />
+    <tags>Dynamics CRM Microsoft Mapper Attribute SDK Tool</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2" >
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src=".\adventureMap.png" target="images\" />
+    <file src=".\icon.png" target="images\" />
   </files>
 </package>
