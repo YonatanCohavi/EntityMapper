@@ -1,4 +1,5 @@
 # Entity Mapper
+[![CI](https://github.com/YonatanCohavi/EntityMapper/actions/workflows/build.yml/badge.svg)](https://github.com/YonatanCohavi/EntityMapper/actions/workflows/build.yml)
 
 Entity mapper is an attribute based mapper for **Microsoft Dynamics CRM SDK**.
 
