@@ -42,10 +42,11 @@ namespace Tests
         public void MapToEntity()
         {
             var mood = ContactMood.Coding;
+            var guid = Guid.NewGuid();
             var contactModel = new ContactModel
             {
                 FullName = "Bar Refaeli",
-                ParentAccountId = Guid.Empty,
+                ParentAccountId = guid,
                 Mood = mood
             };
 
