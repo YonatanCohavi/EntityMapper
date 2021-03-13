@@ -33,5 +33,13 @@ jobs:
         
       - name: Restore Nugets Packages
         run: nuget restore EntityMapper.sln
+      
+      - name: Build the solution
+        run: msbuild EntityMapper.sln
+            
+            
+            
+            
+            
             
 
