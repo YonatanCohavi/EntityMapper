@@ -12,11 +12,20 @@
     <description>Creating Entity Models</description>
     <releaseNotes>Initial Release</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags>Dynamics CRM Microsoft Mapper Attribute SDK Tool</tags>
-    <dependencies>
-      <group targetFramework=".NETFramework4.6.2" >
-      </group>
-    </dependencies>
+    <tags>Dynamics CRM Microsoft Mapper Attribute SDK Tool XRM D365 Dynamics365 365</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Runtime.Serialization" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.IdentityModel" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.ServiceModel" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.ServiceModel.Web" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.DirectoryServices" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.DirectoryServices.AccountManagement" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Security" targetFramework=".NETFramework4.6.2" />
+    </frameworkAssemblies>
   </metadata>
   <files>
     <file src=".\icon.png" target="images\" />
