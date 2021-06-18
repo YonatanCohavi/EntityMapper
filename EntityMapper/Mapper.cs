@@ -149,7 +149,12 @@ namespace EntityMapper
                 .Where(p => p.CRMFieldBaseAttribute != null)
                 .Select(p => p.CRMFieldBaseAttribute.AttributeName)
                 .Distinct();
-            return new ColumnSet(crmAttributes.ToArray());
+
+            var columnSet = new ColumnSet(crmAttributes.ToArray());
+            var logicalName = new T().LogicalName;
+            columnSet.AddColumn($"{logicalName}id");
+
+            return columnSet;
         }
     }
 }
