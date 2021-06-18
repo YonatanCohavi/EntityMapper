@@ -61,6 +61,7 @@ namespace EntityMapper
                     }
                 }
             }
+            model.Id = entity.Id;
             return model;
         }
         private static AttributeCollection GetAttributes(CrmEntityBase crmEntity, PropertyHelper[] helpers)
