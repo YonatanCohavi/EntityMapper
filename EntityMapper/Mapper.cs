@@ -149,6 +149,7 @@ namespace EntityMapper
             var crmAttributes = propHelpers
                 .Where(p => p.CRMFieldBaseAttribute != null)
                 .Select(p => p.CRMFieldBaseAttribute.AttributeName)
+                .Where(an => !an.Contains("."))
                 .Distinct();
 
             var columnSet = new ColumnSet(crmAttributes.ToArray());

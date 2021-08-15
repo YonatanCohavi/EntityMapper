@@ -19,10 +19,10 @@ namespace Tests.Models
     {
        
         public override string LogicalName => "contact";
-
+        [CRMField("father.name")]
+        public string FathersName { get; set; }
         [CRMField("fullname")]
         public string FullName { get; set; }
-
         [CRMLookup("parentaccountid", "account")]
         public Guid? ParentAccountId { get; set; }
         [CRMField("parentaccountid", CRMFieldType.FormattedValue)]

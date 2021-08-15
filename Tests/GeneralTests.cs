@@ -21,6 +21,7 @@ namespace Tests
             var mood = ContactMood.Coding;
             var contactEntity = new Entity("contact")
             {
+                ["father.name"] = "John's Father",
                 ["fullname"] = "John Doe",
                 ["parentaccountid"] = accountRef,
                 ["new_mood"] = new OptionSetValue((int)mood),
@@ -31,6 +32,7 @@ namespace Tests
 
             var contactModel = Mapper.ToModel<ContactModel>(contactEntity);
             Assert.AreEqual("John Doe", contactModel.FullName);
+            Assert.AreEqual("John's Father", contactModel.FathersName);
             Assert.AreEqual(guid, contactModel.ParentAccountId);
             Assert.AreEqual("Mama Theresa", contactModel.ParentAccountIdName);
             Assert.AreEqual("ParentAccountIdLookupName", contactModel.ParentAccountIdLookupName);
@@ -67,7 +69,7 @@ namespace Tests
         public void GetColumnSet()
         {
             var contactColumnSet = Mapper.GetColumnSet<ContactModel>();
-            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood" };
+            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood","contactid" };
             Assert.IsTrue(Enumerable.SequenceEqual(expectedColumns, contactColumnSet.Columns));
         }
     }
