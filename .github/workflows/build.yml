@@ -25,4 +25,6 @@ jobs:
         run: nuget pack EntityMapper/EntityMapper.csproj -build -Prop Configuration=Release
       
       - name: Publish EntityMapper
-        run: nuget push *.nupkg ${{secrets.NUGET_API_KEY}} -source  https://api.nuget.org/v3/index.json
+        run: nuget push *.nupkg ${{secrets.NUGET_API_KEY}} -source  https://api.nuget.org/v3/index.json -SkipDuplicate
+
+
