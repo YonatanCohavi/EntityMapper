@@ -37,10 +37,11 @@ jobs:
       
       - name: Build the solution
         run: msbuild EntityMapper.sln
-            
-            
-            
-            
-            
-            
-
+      
+      - name: publish on version change
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Core/Core.csproj
+          BUILD_CONFIGURATION: Release
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
