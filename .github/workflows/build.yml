@@ -45,3 +45,5 @@ jobs:
           PROJECT_FILE_PATH: EntityMapper/EntityMapper.csproj
           BUILD_CONFIGURATION: Release
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          VERSION_FILE_PATH: EntityMapper/Properties/AssemblyInfo.cs
+          VERSION_REGEX: \[assembly:\sAssemblyFileVersion\(\"(.*)\"\)\]
