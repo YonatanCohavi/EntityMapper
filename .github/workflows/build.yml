@@ -18,6 +18,9 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
         
+      - name: Restore Nugets
+        run: nuget restore EntityMapper.sln
+
       - name: Pack EntityMapper
         run: nuget pack EntityMapper/EntityMapper.csproj -build -Prop Configuration=Release
       
