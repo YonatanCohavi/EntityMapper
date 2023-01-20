@@ -3,14 +3,15 @@ using EntityMapper.Helpes;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EntityMapper
 {
-    public static class Mapper
+    public class Mapper : IEntityMapper
     {
         private static readonly bool ignoreNulls = true;
-        public static Entity ToEntity(CrmEntityBase model)
+        public Entity ToEntity(CrmEntityBase model)
         {
             var entity = new Entity(model.LogicalName);
             var helpers = PropertyHelper.GetProperties(model.GetType());
@@ -26,7 +27,7 @@ namespace EntityMapper
             entity.Attributes.AddRange(attributes);
             return entity;
         }
-        public static T ToModel<T>(Entity entity, string entityAlias = null) where T : CrmEntityBase, new()
+        public T ToModel<T>(Entity entity, string entityAlias = null) where T : CrmEntityBase, new()
         {
             var model = new T();
             if (entity.LogicalName != model.LogicalName && entityAlias == null)
@@ -64,7 +65,7 @@ namespace EntityMapper
             model.Id = entity.Id;
             return model;
         }
-        private static AttributeCollection GetAttributes(CrmEntityBase crmEntity, PropertyHelper[] helpers)
+        private AttributeCollection GetAttributes(CrmEntityBase crmEntity, PropertyHelper[] helpers)
         {
             var attributes = new AttributeCollection();
             var relevantHelpers = helpers.Where(ph => ph.CRMFieldBaseAttribute != null);
@@ -84,7 +85,7 @@ namespace EntityMapper
             }
             return attributes;
         }
-        private static object GetCrmValue(CRMFieldBaseAttribute crmFieldAttribute, object value)
+        private object GetCrmValue(CRMFieldBaseAttribute crmFieldAttribute, object value)
         {
             if (value == null)
                 return null;
@@ -98,6 +99,10 @@ namespace EntityMapper
                 case CRMFieldType.Enum:
                 case CRMFieldType.OptionSet:
                     return new OptionSetValue((int)value);
+                case CRMFieldType.OptionSetCollection:
+                    if (!(value is IEnumerable<int> values))
+                        throw new Exception("[OptionSetCollection] value is not IEnumerable<int>");
+                    return new OptionSetValueCollection(values.Select(v => new OptionSetValue(v)).ToList());
                 case CRMFieldType.Money:
                     return new Money((decimal)value);
                 case CRMFieldType.None:
@@ -107,7 +112,7 @@ namespace EntityMapper
                     throw new Exception($"Invalid Crm Type: \"{type}\"");
             }
         }
-        private static object GetModelValue(PropertyHelper property, object entityValue)
+        private object GetModelValue(PropertyHelper property, object entityValue)
         {
             if (entityValue == null)
                 return null;
@@ -119,6 +124,7 @@ namespace EntityMapper
             var entityreference = entityValue as EntityReference;
             var optionSet = entityValue as OptionSetValue;
             var money = entityValue as Money;
+            var optionSetValueCollection = entityValue as OptionSetValueCollection;
 
             switch (property.CRMFieldBaseAttribute.Type)
             {
@@ -128,6 +134,8 @@ namespace EntityMapper
                     return entityreference.Id;
                 case CRMFieldType.LookupName:
                     return entityreference.Name;
+                case CRMFieldType.OptionSetCollection:
+                    return optionSetValueCollection.Select(o => o.Value).ToArray();
                 case CRMFieldType.OptionSet:
                     return optionSet.Value;
                 case CRMFieldType.Enum:
@@ -143,7 +151,7 @@ namespace EntityMapper
                     throw new Exception($"Invalid Type: \"{property.CRMFieldBaseAttribute.Type}\"");
             }
         }
-        public static ColumnSet GetColumnSet<T>() where T : CrmEntityBase, new()
+        public ColumnSet GetColumnSet<T>() where T : CrmEntityBase, new()
         {
             var propHelpers = PropertyHelper.GetProperties(typeof(T));
             var crmAttributes = propHelpers
