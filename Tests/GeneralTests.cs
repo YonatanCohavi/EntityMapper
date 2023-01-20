@@ -25,12 +25,14 @@ namespace Tests
                 ["fullname"] = "John Doe",
                 ["parentaccountid"] = accountRef,
                 ["new_mood"] = new OptionSetValue((int)mood),
+                ["new_hobbies"] = new OptionSetValueCollection(new[] { new OptionSetValue(1), new OptionSetValue(2), new OptionSetValue(3) })
             };
 
             // faking formatted value
             contactEntity.FormattedValues["parentaccountid"] = "Mama Theresa";
-
-            var contactModel = Mapper.ToModel<ContactModel>(contactEntity);
+            var mapper = new Mapper();
+            var contactModel = mapper.ToModel<ContactModel>(contactEntity);
+            Assert.IsTrue(contactModel.Hobbies.Any(h => h == Hobby.Soccer));
             Assert.AreEqual("John Doe", contactModel.FullName);
             Assert.AreEqual("John's Father", contactModel.FathersName);
             Assert.AreEqual(guid, contactModel.ParentAccountId);
@@ -49,10 +51,12 @@ namespace Tests
             {
                 FullName = "Bar Refaeli",
                 ParentAccountId = guid,
-                Mood = mood
+                Mood = mood,
+                Hobbies = new[] { Hobby.Soccer, Hobby.Eating, Hobby.Movies }
             };
+            var mapper = new Mapper();
 
-            var contactEntity = Mapper.ToEntity(contactModel);
+            var contactEntity = mapper.ToEntity(contactModel);
 
             var fullname = contactEntity.GetAttributeValue<string>("fullname");
             var parentAccountRef = contactEntity.GetAttributeValue<EntityReference>("parentaccountid");
@@ -68,8 +72,9 @@ namespace Tests
         [TestMethod]
         public void GetColumnSet()
         {
-            var contactColumnSet = Mapper.GetColumnSet<ContactModel>();
-            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood", "contactid" };
+            var mapper = new Mapper();
+            var contactColumnSet = mapper.GetColumnSet<ContactModel>();
+            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood", "new_hobbies","contactid" };
             Assert.IsTrue(Enumerable.SequenceEqual(expectedColumns, contactColumnSet.Columns));
         }
     }

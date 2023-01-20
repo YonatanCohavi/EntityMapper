@@ -125,7 +125,6 @@ namespace EntityMapper
             var optionSet = entityValue as OptionSetValue;
             var money = entityValue as Money;
             var optionSetValueCollection = entityValue as OptionSetValueCollection;
-
             switch (property.CRMFieldBaseAttribute.Type)
             {
                 case CRMFieldType.Basic:

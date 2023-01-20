@@ -17,6 +17,7 @@ namespace EntityMapper.Attributes
         Enum = 6,
         LookupName = 7,
         OptionSetCollection = 8,
+
     }
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public abstract class CRMFieldBaseAttribute : Attribute

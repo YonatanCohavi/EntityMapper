@@ -63,6 +63,7 @@
     <Compile Include="Helpes\PropertyHelper.cs" />
     <Compile Include="CrmEntityBase.cs" />
     <Compile Include="IEntityMapper.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
