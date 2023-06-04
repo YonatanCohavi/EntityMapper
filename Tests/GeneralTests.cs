@@ -1,4 +1,4 @@
-﻿using EntityMapper;
+﻿using EntityMapperStandart;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using System;
@@ -14,12 +14,13 @@ namespace Tests
         public void MapFromEntity()
         {
             var guid = Guid.NewGuid();
+            var id = Guid.NewGuid();
             var accountRef = new EntityReference("account", guid)
             {
                 Name = "ParentAccountIdLookupName"
             };
             var mood = ContactMood.Coding;
-            var contactEntity = new Entity("contact")
+            var contactEntity = new Entity("contact", id)
             {
                 ["father.name"] = new AliasedValue(null, null, "John's Father"),
                 ["fullname"] = "John Doe",
@@ -38,6 +39,7 @@ namespace Tests
             Assert.AreEqual(guid, contactModel.ParentAccountId);
             Assert.AreEqual("Mama Theresa", contactModel.ParentAccountIdName);
             Assert.AreEqual("ParentAccountIdLookupName", contactModel.ParentAccountIdLookupName);
+            Assert.AreEqual(contactModel.Id, contactEntity.Id);
             Assert.AreEqual(contactModel.Mood, mood);
             Assert.AreEqual(contactModel.Mood.GetType().FullName, typeof(ContactMood).FullName);
         }
@@ -47,8 +49,11 @@ namespace Tests
         {
             var mood = ContactMood.Coding;
             var guid = Guid.NewGuid();
+            var id = Guid.NewGuid();
+
             var contactModel = new ContactModel
             {
+                Id = id,
                 FullName = "Bar Refaeli",
                 ParentAccountId = guid,
                 Mood = mood,
@@ -66,15 +71,17 @@ namespace Tests
             Assert.AreEqual("account", parentAccountRef.LogicalName);
             Assert.AreEqual(contactModel.ParentAccountId, parentAccountRef.Id);
             Assert.AreEqual(contactModel.Mood, (ContactMood)moodValue);
+            Assert.AreEqual(contactModel.Id, contactEntity.Id);
             Assert.AreEqual(contactModel.Mood.GetType().FullName, typeof(ContactMood).FullName);
         }
 
         [TestMethod]
         public void GetColumnSet()
         {
+            var model = new ContactModel();
             var mapper = new Mapper();
             var contactColumnSet = mapper.GetColumnSet<ContactModel>();
-            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood", "new_hobbies","contactid" };
+            var expectedColumns = new[] { "fullname", "parentaccountid", "new_mood", "new_hobbies", model.PrimaryId };
             Assert.IsTrue(Enumerable.SequenceEqual(expectedColumns, contactColumnSet.Columns));
         }
     }

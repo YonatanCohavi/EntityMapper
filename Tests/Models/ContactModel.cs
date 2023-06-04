@@ -1,11 +1,6 @@
-﻿using EntityMapper;
-using EntityMapper.Attributes;
-using Microsoft.Crm.Sdk.Messages;
+﻿using EntityMapperStandart;
+using EntityMapperStandart.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.Models
 {
@@ -24,7 +19,6 @@ namespace Tests.Models
     }
     public class ContactModel : CrmEntityBase
     {
-
         public override string LogicalName => "contact";
         [CRMField("father.name")]
         public string FathersName { get; set; }

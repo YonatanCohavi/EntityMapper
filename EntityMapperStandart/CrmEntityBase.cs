@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EntityMapper
+namespace EntityMapperStandart
 {
     public abstract class CrmEntityBase
     {

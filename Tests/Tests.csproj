@@ -71,13 +71,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityMapper\EntityMapper.csproj">
-      <Project>{65E095C1-5513-4E51-8274-40BF4166DB61}</Project>
-      <Name>EntityMapper</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\EntityMapperStandart\EntityMapperStandart.csproj">
+      <Project>{58ccc6e2-365b-4b86-a9c5-887b2ecf2ec2}</Project>
+      <Name>EntityMapperStandart</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

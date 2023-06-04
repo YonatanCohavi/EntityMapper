@@ -1,26 +1,26 @@
-﻿using EntityMapper.Attributes;
-using EntityMapper.Helpes;
+﻿using EntityMapperStandart.Attributes;
+using EntityMapperStandart.Helpes;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EntityMapper
+namespace EntityMapperStandart
 {
     public class Mapper : IEntityMapper
     {
         private static readonly bool ignoreNulls = true;
         public Entity ToEntity(CrmEntityBase model)
         {
-            var entity = new Entity(model.LogicalName);
+            var entity = new Entity(model.LogicalName, model.Id);
             var helpers = PropertyHelper.GetProperties(model.GetType());
             var attributes = GetAttributes(model, helpers);
-            if (attributes.Contains($"{model.LogicalName}id"))
+            if (attributes.Contains(model.PrimaryId))
             {
-                var id = (Guid)attributes[model.LogicalName];
+                var id = (Guid)attributes[model.PrimaryId];
                 if (id == default)
-                    attributes.Remove($"{model.LogicalName}id");
+                    attributes.Remove(model.PrimaryId);
                 else
                     entity.Id = id;
             }
@@ -130,19 +130,29 @@ namespace EntityMapper
                 case CRMFieldType.Basic:
                     return entityValue;
                 case CRMFieldType.Lookup:
+                    if (entityreference == default)
+                        throw new ArgumentNullException(nameof(entityreference));
                     return entityreference.Id;
                 case CRMFieldType.LookupName:
+                    if (entityreference == default)
+                        throw new ArgumentNullException(nameof(entityreference));
                     return entityreference.Name;
                 case CRMFieldType.OptionSetCollection:
                     return optionSetValueCollection.Select(o => o.Value).ToArray();
                 case CRMFieldType.OptionSet:
+                    if (optionSet == default)
+                        throw new ArgumentNullException(nameof(optionSet));
                     return optionSet.Value;
                 case CRMFieldType.Enum:
+                    if (optionSet == default)
+                        throw new ArgumentNullException(nameof(optionSet));
                     var enumType = property.Property.PropertyType;
                     // Unwrap nullable types
                     enumType = Nullable.GetUnderlyingType(enumType) ?? enumType;
                     return Enum.ToObject(enumType, optionSet.Value);
                 case CRMFieldType.Money:
+                    if (money == default)
+                        throw new ArgumentNullException(nameof(money));
                     return money.Value;
                 case CRMFieldType.None:
                 case CRMFieldType.FormattedValue:
@@ -160,8 +170,8 @@ namespace EntityMapper
                 .Distinct();
 
             var columnSet = new ColumnSet(crmAttributes.ToArray());
-            var logicalName = new T().LogicalName;
-            columnSet.AddColumn($"{logicalName}id");
+            var primaryId = new T().PrimaryId;
+            columnSet.AddColumn(primaryId);
 
             return columnSet;
         }
