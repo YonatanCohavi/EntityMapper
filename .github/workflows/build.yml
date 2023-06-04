@@ -22,7 +22,7 @@ jobs:
         run: nuget restore EntityMapper.sln
 
       - name: Pack EntityMapper
-        run: nuget pack EntityMapper/EntityMapper.csproj -build -Prop Configuration=Release
+        run: nuget pack EntityMapperStandart/EntityMapperStandart.csproj -build -Prop Configuration=Release
       
       - name: Publish EntityMapper
         run: nuget push *.nupkg ${{secrets.NUGET_API_KEY}} -source  https://api.nuget.org/v3/index.json -SkipDuplicate
